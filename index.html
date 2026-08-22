@@ -293,6 +293,162 @@
     </div>
 
   </div>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding Platform 🚀✨</title>
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 28px;
+      border-radius: 12px;
+      max-width: 650px;
+      margin: 20px auto;
+    }
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .avatar {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    .project-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .project-item {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="card">
+    <h2>Loading Platform... ⚡</h2>
+  </div>
+
+  <script>
+    // Mock Database for Users & Projects
+    const usersDatabase = {
+      "kenny6": {
+        username: "kenny6",
+        displayName: "Kenny 👑",
+        bio: "Creator of CosmicJam Orbit Engine. Building high-performance block extensions and physics engines! 🪐✨",
+        role: "Lead Creator",
+        projects: [
+          { id: "7907852", title: "CosmicJam Orbit Engine" }
+        ]
+      },
+      "H_DevTeam": {
+        username: "H_DevTeam",
+        displayName: "H Dev Team 🛠️",
+        bio: "Official development team for H Coding core modules and block mods.",
+        role: "Developer",
+        projects: [
+          { id: "1029384", title: "FalconMod Extension" }
+        ]
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedUser = urlParams.get('user');
+    const requestedProject = urlParams.get('id');
+    const app = document.getElementById('app');
+
+    // 👤 ROUTE 1: Render Profile Page
+    if (requestedUser) {
+      const user = usersDatabase[requestedUser];
+      if (user) {
+        let projectsHTML = user.projects.map(p => `
+          <div class="project-item">
+            <span><strong>${p.title}</strong> (#${p.id})</span>
+            <a class="btn" href="/H-Coding/${p.id}">View Project 🚀</a>
+          </div>
+        `).join('');
+
+        app.innerHTML = `
+          <div class="profile-header">
+            <div class="avatar">${user.displayName.charAt(0)}</div>
+            <div>
+              <span class="badge">${user.role}</span>
+              <h1 style="margin-top: 4px;">${user.displayName}</h1>
+              <p style="color: #94a3b8; font-size: 0.9rem;">@${user.username}</p>
+            </div>
+          </div>
+          <p>${user.bio}</p>
+          <hr style="border-color: #334155; margin: 20px 0;">
+          <h3>Published .hcoding Projects 📂</h3>
+          <div class="project-list">${projectsHTML}</div>
+        `;
+        window.history.replaceState({}, '', '/H-Coding/user/' + user.username);
+      } else {
+        app.innerHTML = `
+          <h1>User Not Found ❌</h1>
+          <p style="color: #94a3b8;">No creator exists with username <code>@${requestedUser}</code>.</p>
+          <a class="btn" href="/H-Coding/" style="margin-top:15px; display:inline-block;">🏠 Return Home</a>
+        `;
+      }
+    } 
+    // 🚀 ROUTE 2: Default Welcome Screen
+    else if (!requestedProject) {
+      app.innerHTML = `
+        <h1>Welcome to H-Coding 🚀</h1>
+        <p>Explore profiles or view projects!</p>
+        <div style="margin-top: 15px; display: flex; gap: 10px;">
+          <a class="btn" href="/H-Coding/user/kenny6">View @kenny6 Profile 👤</a>
+          <a class="btn" href="/H-Coding/7907852">View Project #7907852 🪐</a>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
+
 
   <!-- <footer> -->
   <footer>
