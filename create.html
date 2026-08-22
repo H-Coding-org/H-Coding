@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H-Coding Block Editor ⚡</title>
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --panel-bg: #1e293b;
+      --border-color: #334155;
+      --accent-blue: #38bdf8;
+      --motion-color: #4c97ff;
+      --looks-color: #9966ff;
+      --events-color: #ffd500;
+      --control-color: #ffab19;
+      --text-main: #f8fafc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg-dark); color: var(--text-main); font-family: Arial, sans-serif; overflow: hidden; height: 100vh; }
+
+    /* 🌐 Header */
+    header {
+      background: #090d16;
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 50px;
+    }
+    .brand { font-weight: bold; color: var(--accent-blue); display: flex; align-items: center; gap: 8px; }
+    .top-btn {
+      background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px;
+      font-weight: bold; cursor: pointer; font-size: 0.85rem;
+    }
+
+    /* 🧩 Editor Grid */
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 180px 260px 1fr 340px;
+      height: calc(100vh - 50px);
+    }
+
+    /* Category Column */
+    .sidebar {
+      background: #111827;
+      border-right: 1px solid var(--border-color);
+      padding: 15px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cat-btn {
+      background: transparent; color: #94a3b8; border: none; padding: 8px; border-radius: 6px;
+      text-align: left; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
+    }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+    /* Block Palette Column */
+    .palette {
+      background: #1e293b;
+      border-right: 1px solid var(--border-color);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    /* Drag & Drop Canvas */
+    .workspace {
+      background: #0b1120;
+      border-right: 1px solid var(--border-color);
+      padding: 20px;
+      position: relative;
+      background-image: radial-gradient(#1e293b 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* 🟦 Block Styling */
+    .block {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: white;
+      cursor: grab;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      width: fit-content;
+    }
+    .block input {
+      width: 40px;
+      background: white;
+      border: none;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .events { background: var(--events-color); color: #000; }
+    .motion { background: var(--motion-color); }
+    .looks { background: var(--looks-color); }
+    .control { background: var(--control-color); }
+
+    /* Canvas Placed Blocks */
+    .placed-block {
+      position: absolute;
+      cursor: move;
+    }
+
+    /* 🕹️ Stage Panel */
+    .stage-panel {
+      background: var(--panel-bg);
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .stage {
+      background: #000; border: 2px solid var(--border-color); border-radius: 8px;
+      height: 220px; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    #sprite { font-size: 3rem; transition: transform 0.2s, opacity 0.2s; position: absolute; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">⚡ H-Coding Block Studio</div>
+    <div>
+      <button class="top-btn" onclick="exportHCoding()">💾 Export .hcoding</button>
+    </div>
+  </header>
+
+  <div class="editor-layout">
+    
+    <!-- 1. Categories -->
+    <div class="sidebar">
+      <button class="cat-btn"><span class="dot" style="background: var(--events-color);"></span> Events</button>
+      <button class="cat-btn"><span class="dot" style="background: var(--motion-color);"></span> Motion</button>
+      <button class="cat-btn"><span class="dot" style="background: var(--looks-color);"></span> Looks</button>
+      <button class="cat-btn"><span class="dot" style="background: var(--control-color);"></span> Control</button>
+    </div>
+
+    <!-- 2. Block Palette -->
+    <div class="palette">
+      <h3>Blocks 🧩</h3>
+      <div class="block events" draggable="true" ondragstart="drag(event)" data-type="flag">
+        when 🟩 flag clicked
+      </div>
+      <div class="block motion" draggable="true" ondragstart="drag(event)" data-type="move">
+        move <input type="number" value="10" /> steps
+      </div>
+      <div class="block motion" draggable="true" ondragstart="drag(event)" data-type="turn">
+        turn ↻ <input type="number" value="15" /> degrees
+      </div>
+      <div class="block looks" draggable="true" ondragstart="drag(event)" data-type="say">
+        say <input type="text" value="Hello!" style="width:55px;" />
+      </div>
+    </div>
+
+    <!-- 3. Drag Workspace -->
+    <div class="workspace" id="workspace" ondrop="drop(event)" ondragover="allowDrop(event)">
+      <!-- Dropped blocks appear here dynamically! -->
+    </div>
+
+    <!-- 4. Interactive Stage Player -->
+    <div class="stage-panel">
+      <div class="stage">
+        <div id="sprite">🚀</div>
+      </div>
+      <button class="top-btn" style="background: #22c55e; padding: 10px;" onclick="runCode()">🟩 Run Code</button>
+      <button class="top-btn" style="background: #ef4444; padding: 10px;" onclick="resetStage()">🛑 Reset Stage</button>
+    </div>
+
+  </div>
+
+  <script>
+    let rotation = 0;
+
+    function allowDrop(ev) { ev.preventDefault(); }
+
+    function drag(ev) {
+      ev.dataTransfer.setData("text/plain", ev.target.dataset.type);
+      ev.dataTransfer.setData("html", ev.target.outerHTML);
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const htmlData = ev.dataTransfer.getData("html");
+      const workspace = document.getElementById("workspace");
+      
+      const newBlock = document.createElement("div");
+      newBlock.innerHTML = htmlData;
+      const blockEl = newBlock.firstElementChild;
+      
+      blockEl.classList.add("placed-block");
+      blockEl.style.left = (ev.clientX - workspace.getBoundingClientRect().left - 20) + "px";
+      blockEl.style.top = (ev.clientY - workspace.getBoundingClientRect().top - 10) + "px";
+      
+      workspace.appendChild(blockEl);
+    }
+
+    // Interactive Code Execution 🚀
+    function runCode() {
+      const placedBlocks = document.querySelectorAll(".placed-block");
+      const sprite = document.getElementById("sprite");
+
+      placedBlocks.forEach(block => {
+        const type = block.dataset.type;
+        const input = block.querySelector("input");
+        const val = input ? input.value : null;
+
+        if (type === "turn") {
+          rotation += parseInt(val || 15);
+          sprite.style.transform = `rotate(${rotation}deg)`;
+        } else if (type === "say") {
+          alert("Sprite says: " + val);
+        }
+      });
+    }
+
+    function resetStage() {
+      rotation = 0;
+      document.getElementById("sprite").style.transform = "rotate(0deg)";
+    }
+
+    // Export JSON layout as .hcoding 💾
+    function exportHCoding() {
+      const placed = Array.from(document.querySelectorAll(".placed-block")).map(b => ({
+        type: b.dataset.type,
+        x: b.style.left,
+        y: b.style.top
+      }));
+
+      const blob = new Blob([JSON.stringify({ blocks: placed }, null, 2)], { type: "application/x-hcoding" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "project.hcoding";
+      a.click();
+    }
+  </script>
+
+</body>
+</html>
