@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding - Built for Next-Gen Creators 🚀✨</title>
+  <style>
+    :root {
+      --bg-dark: #0b1120;
+      --card-bg: #1e293b;
+      --card-hover: #334155;
+      --accent-blue: #38bdf8;
+      --accent-indigo: #6366f1;
+      --accent-green: #22c55e;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 50px;
+    }
+
+    /* 🌐 Header & Nav */
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    nav a {
+      color: var(--text-sub);
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent-blue);
+    }
+
+    /* 🔥 Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-sub);
+      margin-bottom: 30px;
+    }
+
+    .cta-btn {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-indigo));
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      display: inline-block;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+    }
+
+    /* ⚡ Features Grid */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin: 50px 0 30px;
+      color: var(--text-main);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+    }
+
+    .card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--accent-blue);
+    }
+
+    .card p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+    }
+
+    /* 🧩 Community Projects Section */
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-preview {
+      height: 160px;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .project-body {
+      padding: 20px;
+    }
+
+    .project-tag {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    .project-author {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 12px;
+    }
+
+    /* <footer> Footer */
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      border-top: 1px solid #1e293b;
+      padding-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌐 Navigation Bar -->
+  <header>
+    <div class="logo">💻 H Coding</div>
+    <nav>
+      <a href="#features">Features ⚡</a>
+      <a href="#community">Community 🌟</a>
+      <a href="#docs">Docs 📚</a>
+    </nav>
+  </header>
+
+  <!-- 🔥 Hero Banner -->
+  <section class="hero">
+    <h1>Create, Save & Execute with .hcoding 🚀</h1>
+    <p>The high-performance workspace designed for custom block extensions, custom scripts, and lightweight project files! 💻✨</p>
+    <a href="#community" class="cta-btn">Explore Projects 🛠️</a>
+  </section>
+
+  <div class="container">
+    
+    <!-- ⚡ Core Features -->
+    <h2 id="features" class="section-title">Platform Features 🛠️</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📂</div>
+        <h3>Native .hcoding Format</h3>
+        <p>Save and package your workspace configurations, block code, and assets into compact custom files instantly. 💾</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Ultra-Fast Execution</h3>
+        <p>Optimized block-based engine that parses script data instantly without lagging your canvas! 🚀</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🌙</div>
+        <h3>Custom Blue Dark Mode</h3>
+        <p>Built with high-contrast slate blues designed specifically to protect your eyes during long dev sessions. 👀✨</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h3>Modular Extensions</h3>
+        <p>Plug into custom block modifications effortlessly. Full compatibility across custom engines! 🕹️</p>
+      </div>
+    </div>
+
+    <!-- 🌟 Community Projects -->
+    <h2 id="community" class="section-title">Community Projects 🌐</h2>
+    <div class="grid">
+      
+      <div class="project-card">
+        <div class="project-preview">🌌</div>
+        <div class="project-body">
+          <span class="project-tag">SIMULATION</span>
+          <h3>Orbit Engine</h3>
+          <p>Real-time stellar physics simulator running multi-body gravitational orbits directly from <code>.hcoding</code> files! 🪐✨</p>
+          <div class="project-author">Created by <strong>@kenny6</strong> 👑</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-preview">🧩</div>
+        <div class="project-body">
+          <span class="project-tag">BLOCK EDITOR</span>
+          <h3>Bro what are you doing.</h3>
+          <p>Follow my h coding account if you want free dark mode 🦅⚡</p>
+          <div class="project-author">Created by <strong>@H_DevTeam</strong> 🛠️</div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-preview">🎨</div>
+        <div class="project-body">
+          <span class="project-tag">PIXEL ART</span>
+          <h3>WHY DID YOU COME HERE</h3>
+          <p>Get out of my face. 🎨</p>
+          <div class="project-author">Created by <strong>@PixelCraft</strong> ✨</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- <footer> -->
+  <footer>
+    <p>H Coding Platform © 2026</p>
+  </footer>
+
+</body>
+</html>
