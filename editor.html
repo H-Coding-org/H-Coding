@@ -1,2 +1,80 @@
 <button id="myButton">EXPORT 💿</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding Extension Setup 💻🔥</title>
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #58a6ff;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .code-box {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      color: #c9d1d9;
+    }
+    button {
+      background-color: #238636;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2ea043;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>H Coding File Handler 🚀✨</h1>
+  <p>Custom <code>.hcoding</code> extension downloader and parser!</p>
+
+  <div class="code-box">
+    <textarea id="hcoding-content" rows="10" cols="50" style="width: 100%; background: #0d1117; color: #79c0ff; border: 1px solid #30363d;">
+{
+  "extension": ".hcoding",
+  "project": "H Coding Engine",
+  "version": "1.0",
+  "status": "Ready ⚡"
+}
+    </textarea>
+    <br/><br/>
+    <button onclick="downloadHCoding()">💾 Save as .hcoding</button>
+    <input type="file" id="file-input" accept=".hcoding" style="display: none;" onchange="loadHCoding(event)">
+    <button onclick="document.getElementById('file-input').click()">📂 Open .hcoding</button>
+  </div>
+
+  <script>
+    function downloadHCoding() {
+      const text = document.getElementById("hcoding-content").value;
+      const blob = new Blob([text], { type: "text/x-hcoding" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "project.hcoding";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function loadHCoding(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("hcoding-content").value = e.target.result;
+        };
+        reader.readAsText(file);
+      }
+    }
+  </script>
+
+</body>
+</html>
