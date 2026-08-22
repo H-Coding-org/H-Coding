@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding - Project Explorer 🚀✨</title>
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+    /* 🧩 Scratch-Style Layout */
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .stage-container {
+      background: #000;
+      border: 2px solid #334155;
+      border-radius: 12px 12px 0 0;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .stage-bar {
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 10px 16px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .action-btn {
+      background: #334155;
+      color: #f8fafc;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .action-btn:hover {
+      background: #475569;
+    }
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    .info-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 18px;
+      border-radius: 10px;
+    }
+    .info-box h3 {
+      color: #38bdf8;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <h2>Loading H-Coding Project... ⚡</h2>
+</div>
+
+<script>
+  const projects = {
+    "7907852": {
+      title: "CosmicJam Orbit Engine 🪐",
+      author: "kenny6",
+      instructions: "Press SPACE to launch celestial bodies! Use arrow keys to adjust orbital velocity.",
+      notes: "Built for CosmicJam! Uses custom gravity physics loops.",
+      loves: 142,
+      favs: 98
+    }
+  };
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const projectId = urlParams.get('id');
+  const app = document.getElementById('app');
+
+  if (projectId && projects[projectId]) {
+    const p = projects[projectId];
+    app.innerHTML = `
+      <!-- Header Bar -->
+      <div class="project-header">
+        <div>
+          <span class="badge">PROJECT #${projectId}</span>
+          <h1 style="margin-top: 5px;">${p.title}</h1>
+          <p style="color: #94a3b8;">Created by <a href="/H-Coding/user/${p.author}" style="color: #38bdf8; text-decoration: none;"><strong>@${p.author}</strong></a></p>
+        </div>
+        <a class="btn" href="./projects/${projectId}.hcoding" download>💾 Download .hcoding</a>
+      </div>
+
+      <!-- Interactive Player/Stage Area -->
+      <div class="stage-container">
+        <div style="font-size: 4rem;">🪐⚡</div>
+        <p style="color: #94a3b8; margin-top: 10px;">[ Interactive .hcoding Stage Canvas ]</p>
+      </div>
+
+      <!-- Action Bar (Scratch Style: Green Flag, Loves, Favs) -->
+      <div class="stage-bar">
+        <button class="action-btn" style="background: #22c55e;">🟩 Run Code</button>
+        <button class="action-btn" style="background: #ef4444;">🛑 Stop</button>
+        <div style="margin-left: auto; display: flex; gap: 10px;">
+          <button class="action-btn">❤️ ${p.loves}</button>
+          <button class="action-btn">⭐ ${p.favs}</button>
+        </div>
+      </div>
+
+      <!-- Details Section: Instructions & Credits -->
+      <div class="details-grid">
+        <div class="info-box">
+          <h3>📖 Instructions</h3>
+          <p style="font-size: 0.95rem; color: #cbd5e1;">${p.instructions}</p>
+        </div>
+        <div class="info-box">
+          <h3>📜 Notes and Credits</h3>
+          <p style="font-size: 0.95rem; color: #cbd5e1;">${p.notes}</p>
+        </div>
+      </div>
+    `;
+    window.history.replaceState({}, '', '/H-Coding/' + projectId);
+  } else {
+    app.innerHTML = `
+      <h1>Welcome to H-Coding 🚀</h1>
+      <p>Enter a valid project ID like <code>/7907852</code> to view the full stage player page!</p>
+    `;
+  }
+</script>
+
+</body>
+</html>
