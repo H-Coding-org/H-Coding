@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting... 🚀</title>
+  <script>
+    // Extract the Project ID from the requested URL path
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const projectId = pathSegments[pathSegments.length - 1];
+
+    // If the path ends in a numeric ID, redirect to index.html with the id parameter
+    if (projectId && !isNaN(projectId)) {
+      window.location.replace('/H-Coding/?id=' + projectId);
+    } else {
+      window.location.replace('/H-Coding/');
+    }
+  </script>
+</head>
+<body>
+  <p>Loading project... ⚡</p>
+</body>
+</html>
