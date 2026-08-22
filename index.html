@@ -302,3 +302,100 @@
 </body>
 </html>
 <link rel="icon" type="image/png" href="favicon.jpeg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding - Project Explorer 🚀✨</title>
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 24px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .id-tag {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="card">
+    <h2>Loading H-Coding System... ⚡</h2>
+  </div>
+
+  <script>
+    // Mock Database for ID mappings
+    const projects = {
+      "7907852": {
+        name: "CosmicJam Orbit Engine 🪐",
+        author: "kenny6",
+        description: "Real-time stellar physics simulator running multi-body gravitational orbits directly from .hcoding files!"
+      },
+      "1029384": {
+        name: "FalconMod Extension 🦅",
+        author: "H_DevTeam",
+        description: "High-speed array processing tools and blue theme configurations."
+      }
+    };
+
+    // Get project ID from URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+    const app = document.getElementById('app');
+
+    if (projectId) {
+      const project = projects[projectId];
+      if (project) {
+        app.innerHTML = `
+          <span class="id-tag">PROJECT ID: #${projectId}</span>
+          <h1 style="margin-top: 10px;">${project.name}</h1>
+          <p style="color: #94a3b8; margin-top: 8px;">Created by <strong>@${project.author}</strong></p>
+          <p style="margin-top: 15px;">${project.description}</p>
+          <a class="btn" href="./projects/${projectId}.hcoding" download>💾 Download .hcoding Project</a>
+        `;
+        // Clean URL display back to pretty format without refreshing
+        window.history.replaceState({}, '', '/H-Coding/' + projectId);
+      } else {
+        app.innerHTML = `
+          <span class="id-tag">UNKNOWN ID: #${projectId}</span>
+          <h1>Project Not Found ❌</h1>
+          <p style="color: #94a3b8; margin-top: 8px;">No .hcoding project matches this ID string.</p>
+          <a class="btn" href="/H-Coding/">🏠 Return Home</a>
+        `;
+      }
+    } else {
+      app.innerHTML = `
+        <h1>Welcome to H-Coding 🚀</h1>
+        <p>Select or load a project using a 7-digit ID like <code>/7907852</code>!</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
