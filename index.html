@@ -314,6 +314,131 @@
       max-width: 650px;
       margin: 20px auto;
     }
+    input, textarea {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: #1d4ed8;
+    }
+    .badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="card">
+    <h2>Loading Platform... ⚡</h2>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPublishPage = urlParams.get('publish');
+    const app = document.getElementById('app');
+
+    // 📤 ROUTE: Render Publish Page
+    if (isPublishPage) {
+      app.innerHTML = `
+        <span class="badge">PUBLISH STUDIO 📤</span>
+        <h1 style="margin-top: 10px;">Publish Your .hcoding Project</h1>
+        <p style="color: #94a3b8; margin-bottom: 20px;">Upload or paste your custom project code to generate a unique project ID link!</p>
+        
+        <label><strong>Project Title</strong></label>
+        <input type="text" id="project-title" placeholder="e.g. CosmicJam Orbit Engine" />
+
+        <label><strong>Creator Username</strong></label>
+        <input type="text" id="project-author" placeholder="e.g. kenny6" />
+
+        <label><strong>Project Description</strong></label>
+        <textarea id="project-desc" rows="3" placeholder="Describe what your .hcoding file does..."></textarea>
+
+        <label><strong>Select .hcoding File</strong></label>
+        <input type="file" id="file-input" accept=".hcoding" />
+
+        <button class="btn" onclick="publishProject()">🚀 Publish Project</button>
+      `;
+      window.history.replaceState({}, '', '/H-Coding/publish');
+    }
+
+    // 🎲 Generate Random 7-Digit ID and Publish
+    function publishProject() {
+      const title = document.getElementById('project-title').value;
+      const author = document.getElementById('project-author').value;
+      const desc = document.getElementById('project-desc').value;
+      const fileInput = document.getElementById('file-input');
+
+      if (!title || !author) {
+        alert("Please provide both a project title and creator username!");
+        return;
+      }
+
+      // Generate random 7-digit ID (e.g. 7907852)
+      const newID = Math.floor(1000000 + Math.random() * 9000000);
+      
+      app.innerHTML = `
+        <span class="badge">PUBLISHED SUCCESSFULLY 🎉</span>
+        <h1 style="margin-top: 10px;">${title}</h1>
+        <p style="color: #22c55e; font-weight: bold; margin-top: 10px;">Project published under ID: #${newID}</p>
+        <p style="margin-top: 15px;">Share your live project URL:</p>
+        <input type="text" value="https://h-coding-org.github.io/H-Coding/${newID}" readonly />
+        
+        <div style="margin-top: 15px; display: flex; gap: 10px;">
+          <a class="btn" href="/H-Coding/${newID}">View Live Page 🚀</a>
+          <a class="btn" href="/H-Coding/user/${author}" style="background: #334155;">View Profile 👤</a>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding Platform 🚀✨</title>
+  <style>
+    body {
+      background-color: #0b1120;
+      color: #f8fafc;
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 28px;
+      border-radius: 12px;
+      max-width: 650px;
+      margin: 20px auto;
+    }
     .profile-header {
       display: flex;
       align-items: center;
