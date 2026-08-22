@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H Coding Project Handler 🛠️</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f172a; /* Dark Blue Mode 🌙 */
+      color: #f8fafc;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #1e293b;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      background: #090d16;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .btn-group {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+    button, label {
+      background: #2563eb;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    button:hover, label:hover {
+      background: #1d4ed8;
+    }
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>H Coding File Handler 💻🔥</h2>
+  
+  <p>Write or view your <code>.hcoding</code> data below:</p>
+  <textarea id="editor" placeholder='{"project": "H Coding", "blocks": []}'></textarea>
+
+  <div class="btn-group">
+    <!-- Save button -->
+    <button onclick="saveHCodingFile()">💾 Save .hcoding</button>
+    
+    <!-- Load button tied to file input -->
+    <label for="fileInput">📂 Load .hcoding</label>
+    <input type="file" id="fileInput" accept=".hcoding,application/x-hcoding" onchange="loadHCodingFile(event)" />
+  </div>
+</div>
+
+<script>
+  // Save content as a .hcoding file 💾
+  function saveHCodingFile() {
+    const content = document.getElementById('editor').value;
+    const blob = new Blob([content], { type: 'application/x-hcoding' });
+    const link = document.createElement('a');
+    
+    link.href = URL.createObjectURL(blob);
+    link.download = 'project.hcoding';
+    link.click();
+    
+    URL.revokeObjectURL(link.href);
+  }
+
+  // Read .hcoding file and display it inside the editor 📂
+  function loadHCodingFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('editor').value = e.target.result;
+    };
+    reader.readAsText(file);
+  }
+</script>
+
+</body>
+</html>
